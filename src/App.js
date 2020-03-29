@@ -1,8 +1,12 @@
 import React from 'react';
 import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'font-awesome/css/font-awesome.min.css';
 import Button from './components/Button';
 import Input from './components/Input';
 import ClearButton from './components/ClearButton';
+import History from './components/History';
+
 class App extends React.Component {
   constructor(props){
     super(props);
@@ -47,7 +51,7 @@ class App extends React.Component {
      this.state.previousNumber = this.state.input;
      this.setState({
        input : "",
-       operator : "plus"
+       operator : "+"
      })
    }
 
@@ -55,7 +59,7 @@ class App extends React.Component {
     this.state.previousNumber = this.state.input;
     this.setState({
       input : "",
-      operator : "minus"
+      operator : "-"
     })
    }
 
@@ -63,7 +67,7 @@ class App extends React.Component {
      this.state.previousNumber = this.state.input;
      this.setState({
        input : "",
-       operator : "star"
+       operator : "*"
      })
    }
   
@@ -71,7 +75,7 @@ class App extends React.Component {
     this.state.previousNumber = this.state.input;
     this.setState({
       input : "",
-      operator : "slash"
+      operator : "/"
     })
    }
 
@@ -79,18 +83,18 @@ class App extends React.Component {
     this.state.currentnumber = this.state.input
     let ans;
     
-     if(this.state.operator == "plus"){
+     if(this.state.operator == "+"){
       ans = parseFloat(this.state.currentnumber) + parseFloat(this.state.previousNumber)
 
       
      }
-     else if(this.state.operator == "minus"){
+     else if(this.state.operator == "-"){
       ans = parseFloat(this.state.previousNumber)-parseFloat(this.state.currentnumber)  
      }
-     else if(this.state.operator == "star"){
+     else if(this.state.operator == "*"){
       ans = parseFloat(this.state.previousNumber)*parseFloat(this.state.currentnumber)  
      }
-     else if(this.state.operator == "slash"){
+     else if(this.state.operator == "/"){
       ans = parseFloat(this.state.previousNumber)/parseFloat(this.state.currentnumber)  
      }
      this.setState({
@@ -98,12 +102,36 @@ class App extends React.Component {
     })
    }
 
+   myFunction = () => {
+    var x = document.getElementById("MyDiv");
+    if (x.style.display === "none") {
+      x.style.display = "block";
+    } else {
+      x.style.display = "none";
+    }
+  }
+
+   showLastCalculation = ()=>{
+    {this.myFunction()}
+   }
+
+   
+
   render(){
   return (
+    <React.Fragment>
+    <nav className="navbar">
+          <span className="nav-header mx-auto"><i className="fa fa-calculator"></i>CALCULATOR</span>
+        </nav>
     <div className="App">
+      
       <div className="content-wrapper">
         <div className="row">
         <Input>{this.state.input}</Input>
+        </div>
+        <div className="row">
+          <History handleClick={this.showLastCalculation}><i className="fa fa-repeat" aria-hidden="true"></i></History>
+  <div id="MyDiv"></div>
         </div>
         <div className="row">
             <Button handleClick={this.addToInput}>7</Button>
@@ -115,7 +143,7 @@ class App extends React.Component {
             <Button handleClick={this.addToInput}>4</Button>
             <Button handleClick={this.addToInput}>5</Button>
             <Button handleClick={this.addToInput}>6</Button>
-            <Button handleClear={this.multiply}>*</Button>
+            <Button handleClick={this.multiply}>*</Button>
         </div>
         <div className="row">
             <Button handleClick={this.addToInput}>1</Button>
@@ -136,6 +164,7 @@ class App extends React.Component {
           </div>
       </div>
     </div>
+    </React.Fragment>
   );
   }
 }
